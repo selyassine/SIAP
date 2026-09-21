@@ -1,0 +1,106 @@
+{
+  "functions": [
+    {
+      "id": "PRIME",
+      "name": "PRIME",
+      "description": "Calcule la prime pure et commerciale via le modèle LightGBM+GLM du Module 1 SIAP.",
+      "helpUrl": "https://localhost:3001/taskpane.html",
+      "result": {
+        "type": "number",
+        "dimensionality": "scalar"
+      },
+      "parameters": [
+        { "name": "driv_age", "description": "Âge du conducteur (18-100)", "type": "number", "dimensionality": "scalar" },
+        { "name": "bonus_malus", "description": "Coefficient BonusMalus (50-350)", "type": "number", "dimensionality": "scalar" },
+        { "name": "region", "description": "Code région (ex: R24, R91)", "type": "string", "dimensionality": "scalar" },
+        { "name": "veh_brand", "description": "Marque véhicule (B1-B14)", "type": "string", "dimensionality": "scalar" },
+        { "name": "veh_power", "description": "Puissance véhicule (4-15)", "type": "number", "dimensionality": "scalar" },
+        { "name": "veh_age", "description": "Âge du véhicule en années (0-100)", "type": "number", "dimensionality": "scalar" },
+        { "name": "area", "description": "Zone géographique (A-F)", "type": "string", "dimensionality": "scalar" },
+        { "name": "gas", "description": "Carburant: Regular ou Diesel", "type": "string", "dimensionality": "scalar" },
+        { "name": "density", "description": "Densité de population", "type": "number", "dimensionality": "scalar" },
+        { "name": "type", "description": "Type de prime: pure ou commercial (défaut: pure)", "type": "string", "dimensionality": "scalar", "optional": true }
+      ]
+    },
+    {
+      "id": "FRAUDE",
+      "name": "FRAUDE",
+      "description": "Retourne le score de fraude (0-100) via XGBoost du Module 2 SIAP.",
+      "helpUrl": "https://localhost:3001/taskpane.html",
+      "result": {
+        "type": "number",
+        "dimensionality": "scalar"
+      },
+      "parameters": [
+        { "name": "incident_type", "description": "Type: Single Vehicle Collision, Multi-vehicle Collision, Parked Car, Vehicle Theft", "type": "string", "dimensionality": "scalar" },
+        { "name": "incident_severity", "description": "Sévérité: Minor Damage, Major Damage, Total Loss, Trivial Damage", "type": "string", "dimensionality": "scalar" },
+        { "name": "witnesses", "description": "Nombre de témoins (0-3)", "type": "number", "dimensionality": "scalar" },
+        { "name": "police_report", "description": "Rapport de police: YES ou NO", "type": "string", "dimensionality": "scalar" },
+        { "name": "total_claim", "description": "Montant total réclamé (€)", "type": "number", "dimensionality": "scalar" },
+        { "name": "insured_age", "description": "Âge de l'assuré (optionnel, défaut: 35)", "type": "number", "dimensionality": "scalar", "optional": true },
+        { "name": "auto_year", "description": "Année du véhicule (optionnel, défaut: 2015)", "type": "number", "dimensionality": "scalar", "optional": true }
+      ]
+    },
+    {
+      "id": "IBNR",
+      "name": "IBNR",
+      "description": "Retourne les métriques de réserves IBNR du Module 3 SIAP.",
+      "helpUrl": "https://localhost:3001/taskpane.html",
+      "result": {
+        "type": "number",
+        "dimensionality": "scalar"
+      },
+      "parameters": [
+        {
+          "name": "metric",
+          "description": "Métrique: total | mack_std | mack_cv | bootstrap_mean | bootstrap_p99 | lower_95 | upper_95",
+          "type": "string",
+          "dimensionality": "scalar"
+        }
+      ]
+    },
+    {
+      "id": "KPI",
+      "name": "KPI",
+      "description": "Retourne un KPI du portefeuille en temps réel (Module 5 SIAP).",
+      "helpUrl": "https://localhost:3001/taskpane.html",
+      "result": {
+        "type": "number",
+        "dimensionality": "scalar"
+      },
+      "parameters": [
+        {
+          "name": "metric",
+          "description": "Métrique: loss_ratio | combined_ratio | frequency | severity | total_policies | total_claims_paid | fraud_rate",
+          "type": "string",
+          "dimensionality": "scalar"
+        }
+      ]
+    },
+    {
+      "id": "VISION",
+      "name": "VISION",
+      "description": "Analyse une image de véhicule et retourne la sévérité des dommages (Module 4 SIAP). Retourne Minor/Moderate/Severe/Total Loss.",
+      "helpUrl": "https://localhost:3001/taskpane.html",
+      "result": {
+        "type": "string",
+        "dimensionality": "scalar"
+      },
+      "parameters": [
+        {
+          "name": "image_url",
+          "description": "URL HTTPS de l'image (ex: https://exemple.com/voiture.jpg)",
+          "type": "string",
+          "dimensionality": "scalar"
+        },
+        {
+          "name": "return_field",
+          "description": "Champ retourné: severity | confidence | cost_estimate | incoherence_score (défaut: severity)",
+          "type": "string",
+          "dimensionality": "scalar",
+          "optional": true
+        }
+      ]
+    }
+  ]
+}

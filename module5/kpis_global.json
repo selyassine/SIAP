@@ -1,0 +1,25 @@
+{
+  "portfolio": {
+    "total_policies": 678013,
+    "total_exposure": 358499.4,
+    "total_claims": 36102,
+    "total_claim_amount": 59909216.0,
+    "total_premium": 109679627.0
+  },
+  "kpis": {
+    "frequency": 0.100703,
+    "severity": 2278.54,
+    "pure_premium": 229.46,
+    "loss_ratio": 0.54622,
+    "combined_ratio": 0.74622,
+    "expense_ratio": 0.2,
+    "loading_factor": 0.25
+  },
+  "benchmarks": {
+    "frequency_market": 0.08,
+    "loss_ratio_market": 0.72,
+    "combined_ratio_market": 0.92,
+    "severity_market": 2800.0
+  },
+  "source": "freMTPL2freq + freMTPL2sev"
+}

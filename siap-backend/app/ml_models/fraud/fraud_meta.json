@@ -1,0 +1,132 @@
+{
+  "feature_columns": [
+    "months_as_customer",
+    "age",
+    "policy_state",
+    "policy_csl",
+    "policy_deductable",
+    "policy_annual_premium",
+    "umbrella_limit",
+    "insured_sex",
+    "insured_education_level",
+    "insured_occupation",
+    "insured_hobbies",
+    "insured_relationship",
+    "capital-gains",
+    "capital-loss",
+    "incident_type",
+    "collision_type",
+    "incident_severity",
+    "authorities_contacted",
+    "incident_state",
+    "incident_city",
+    "incident_location",
+    "incident_hour_of_the_day",
+    "number_of_vehicles_involved",
+    "property_damage",
+    "bodily_injuries",
+    "witnesses",
+    "police_report_available",
+    "total_claim_amount",
+    "injury_claim",
+    "property_claim",
+    "vehicle_claim",
+    "auto_make",
+    "auto_model",
+    "auto_year"
+  ],
+  "categorical_columns": [
+    "policy_state",
+    "policy_csl",
+    "insured_sex",
+    "insured_education_level",
+    "insured_occupation",
+    "insured_hobbies",
+    "insured_relationship",
+    "incident_type",
+    "collision_type",
+    "incident_severity",
+    "authorities_contacted",
+    "incident_state",
+    "incident_city",
+    "incident_location",
+    "property_damage",
+    "police_report_available",
+    "auto_make",
+    "auto_model"
+  ],
+  "target_column": "fraud_reported",
+  "optimal_threshold": 0.14746065437793732,
+  "weight_isolation_forest": 0.0,
+  "weight_xgboost": 1.0,
+  "risk_thresholds": {
+    "Low": [
+      0,
+      30
+    ],
+    "Medium": [
+      30,
+      60
+    ],
+    "High": [
+      60,
+      80
+    ],
+    "Very High": [
+      80,
+      100
+    ]
+  },
+  "performance": {
+    "auc_roc_xgb": 0.8172726044060008,
+    "auc_roc_iso": 0.47871333964049195,
+    "auc_roc_combined": 0.8172726044060008,
+    "recall_fraud_optimal": 0.8367346938775511,
+    "precision_fraud_optimal": 0.5540540540540541
+  },
+  "top_features": [
+    {
+      "feature": "incident_severity",
+      "importance": 2.061210870742798
+    },
+    {
+      "feature": "insured_hobbies",
+      "importance": 0.7516909241676331
+    },
+    {
+      "feature": "auto_year",
+      "importance": 0.3698497712612152
+    },
+    {
+      "feature": "number_of_vehicles_involved",
+      "importance": 0.3626796007156372
+    },
+    {
+      "feature": "incident_state",
+      "importance": 0.36181262135505676
+    },
+    {
+      "feature": "incident_location",
+      "importance": 0.28315091133117676
+    },
+    {
+      "feature": "incident_hour_of_the_day",
+      "importance": 0.2770223915576935
+    },
+    {
+      "feature": "incident_type",
+      "importance": 0.2740795314311981
+    },
+    {
+      "feature": "policy_csl",
+      "importance": 0.2687496840953827
+    },
+    {
+      "feature": "police_report_available",
+      "importance": 0.2533057928085327
+    }
+  ],
+  "contamination_rate": 0.2475,
+  "n_train": 800,
+  "n_test": 200
+}

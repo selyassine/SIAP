@@ -1,0 +1,279 @@
+{
+  "audit_date": "2026-06-21T18:04:35.741651",
+  "model_audited": "Module 1 — LightGBM Frequency Model",
+  "dataset": "freMTPL2 (test set, 132882 polices)",
+  "regulatory_context": {
+    "gender_directive_compliant": true,
+    "gender_variable_present": false,
+    "note": "Aucune variable de genre/ethnique dans le dataset source -- conformité de facto"
+  },
+  "region_handling": {
+    "active_regions_count": 11,
+    "active_regions": [
+      "R11",
+      "R24",
+      "R31",
+      "R52",
+      "R53",
+      "R54",
+      "R72",
+      "R73",
+      "R82",
+      "R91",
+      "R93"
+    ],
+    "active_regions_testable_count": 10,
+    "rare_regions_grouped_count": 11,
+    "rare_regions_grouped": [
+      "R41",
+      "R25",
+      "R26",
+      "R23",
+      "R22",
+      "R83",
+      "R74",
+      "R94",
+      "R21",
+      "R42",
+      "R43"
+    ]
+  },
+  "data_limitations": {
+    "note": "freq_test.csv utilise un schéma de nommage de colonnes différent de deployment_meta.json (Bloc 1bis a renommé les bandes et reconstruit VehBrand_Other). Les colonnes de référence implicite (one-hot drop_first) ont été complétées à 0, ce qui est correct par construction. Les régions à variance nulle dans ce split (absentes des polices testées) ont été exclues des tests empiriques (Bloc 4) mais restent incluses dans le test contrefactuel par prédiction directe (Bloc 3), qui ne nécessite pas de variance dans les données.",
+    "zero_variance_regions": [
+      "R11"
+    ],
+    "profile_specific_coincidence_note": "Sur le profil type du Bloc 3, la prédiction de la région '(référence)' coïncide exactement avec celle de R54 (0.1417 dans les deux cas) -- un artefact plausible d'un modèle d'arbres (LightGBM) où certains splits ne sont pas activés pour ce chemin de décision précis, pas une erreur de calcul. Voir robustness_results (Bloc 3bis) pour la vérification sur profils additionnels.",
+    "robustness_check_results": [
+      {
+        "profile": "profil_type (VehPower=6, DrivAge=40, BM=60)",
+        "freq_reference": 0.1417,
+        "regions_coincidant_avec_reference": [
+          "R54"
+        ]
+      },
+      {
+        "profile": "jeune_BM_eleve (DrivAge=22, BM=120)",
+        "freq_reference": 0.3914,
+        "regions_coincidant_avec_reference": []
+      },
+      {
+        "profile": "senior_bon_conducteur (DrivAge=60, BM=50)",
+        "freq_reference": 0.0673,
+        "regions_coincidant_avec_reference": []
+      }
+    ]
+  },
+  "equity_score": 94.5,
+  "verdict": "FAIBLE RISQUE",
+  "flags": [
+    "11 régions à faible volume sont regroupées dans la catégorie de référence, masquant une éventuelle hétérogénéité de risque réelle au sein de ce groupe -- compromis biais-variance assumé, à documenter pour le comité de conformité (pénalité: -5.5)"
+  ],
+  "tests": {
+    "regional_disparity": {
+      "max_disparity_pct": 44.5,
+      "detail_by_region": [
+        {
+          "region": "R53",
+          "frequency": 0.153,
+          "has_dedicated_coefficient": true,
+          "ecart_vs_min_pct": 44.547
+        },
+        {
+          "region": "R82",
+          "frequency": 0.1488,
+          "has_dedicated_coefficient": true,
+          "ecart_vs_min_pct": 40.5886
+        },
+        {
+          "region": "R11",
+          "frequency": 0.1464,
+          "has_dedicated_coefficient": true,
+          "ecart_vs_min_pct": 38.3257
+        },
+        {
+          "region": "R24",
+          "frequency": 0.1448,
+          "has_dedicated_coefficient": true,
+          "ecart_vs_min_pct": 36.7724
+        },
+        {
+          "region": "R54",
+          "frequency": 0.1417,
+          "has_dedicated_coefficient": true,
+          "ecart_vs_min_pct": 33.9262
+        },
+        {
+          "region": "(référence : zone C + 11 régions rares)",
+          "frequency": 0.1417,
+          "has_dedicated_coefficient": false,
+          "ecart_vs_min_pct": 33.9262
+        },
+        {
+          "region": "R52",
+          "frequency": 0.1351,
+          "has_dedicated_coefficient": true,
+          "ecart_vs_min_pct": 27.6095
+        },
+        {
+          "region": "R31",
+          "frequency": 0.1303,
+          "has_dedicated_coefficient": true,
+          "ecart_vs_min_pct": 23.1063
+        },
+        {
+          "region": "R93",
+          "frequency": 0.1211,
+          "has_dedicated_coefficient": true,
+          "ecart_vs_min_pct": 14.3747
+        },
+        {
+          "region": "R72",
+          "frequency": 0.1196,
+          "has_dedicated_coefficient": true,
+          "ecart_vs_min_pct": 12.9815
+        },
+        {
+          "region": "R91",
+          "frequency": 0.1158,
+          "has_dedicated_coefficient": true,
+          "ecart_vs_min_pct": 9.4114
+        },
+        {
+          "region": "R73",
+          "frequency": 0.1058,
+          "has_dedicated_coefficient": true,
+          "ecart_vs_min_pct": 0.0
+        }
+      ]
+    },
+    "density_proxy_correlation": {
+      "strong_proxy_count": 0,
+      "correlations": [
+        {
+          "region": "R24",
+          "correlation_density": -0.188
+        },
+        {
+          "region": "R53",
+          "correlation_density": -0.075
+        },
+        {
+          "region": "R91",
+          "correlation_density": -0.069
+        },
+        {
+          "region": "R54",
+          "correlation_density": -0.054
+        },
+        {
+          "region": "R52",
+          "correlation_density": -0.046
+        },
+        {
+          "region": "R82",
+          "correlation_density": 0.04
+        },
+        {
+          "region": "R72",
+          "correlation_density": -0.033
+        },
+        {
+          "region": "R73",
+          "correlation_density": -0.031
+        },
+        {
+          "region": "R93",
+          "correlation_density": -0.017
+        },
+        {
+          "region": "R31",
+          "correlation_density": -0.009
+        }
+      ]
+    },
+    "shap_decomposition": {
+      "category_contribution_pct": {
+        "geographic_proxy_active": 8.2,
+        "geographic_proxy_grouped_as_reference": 0.0,
+        "socioeconomic_proxy": 6.8,
+        "wealth_proxy": 7.2,
+        "pure_risk_factors": 73.6,
+        "neutral": 4.2
+      },
+      "proxy_total_pct": 22.2
+    },
+    "counterfactual_region_neutralization": {
+      "variance_explained_by_region_pct": 5.5,
+      "mean_prediction_change_pct": 7.8
+    }
+  },
+  "variable_classification": {
+    "geographic_proxy_active": [
+      "Region_R11",
+      "Region_R24",
+      "Region_R31",
+      "Region_R52",
+      "Region_R53",
+      "Region_R54",
+      "Region_R72",
+      "Region_R73",
+      "Region_R82",
+      "Region_R91",
+      "Region_R93"
+    ],
+    "geographic_proxy_grouped_as_reference": [
+      "Region_R41",
+      "Region_R25",
+      "Region_R26",
+      "Region_R23",
+      "Region_R22",
+      "Region_R83",
+      "Region_R74",
+      "Region_R94",
+      "Region_R21",
+      "Region_R42",
+      "Region_R43"
+    ],
+    "socioeconomic_proxy": [
+      "Density"
+    ],
+    "wealth_proxy": [
+      "VehBrand_B10",
+      "VehBrand_B12",
+      "VehBrand_B2",
+      "VehBrand_B3",
+      "VehBrand_B4",
+      "VehBrand_B5",
+      "VehBrand_B6",
+      "VehBrand_Other"
+    ],
+    "pure_risk_factors": [
+      "VehPower",
+      "VehAge",
+      "DrivAge",
+      "BonusMalus",
+      "DrivAge_band_1.0",
+      "DrivAge_band_2.0",
+      "DrivAge_band_3.0",
+      "DrivAge_band_4.0",
+      "BonusMalus_band_1.0",
+      "BonusMalus_band_2.0",
+      "BonusMalus_band_3.0",
+      "BonusMalus_band_4.0",
+      "VehAge_band_1.0",
+      "VehAge_band_2.0",
+      "VehAge_band_3.0",
+      "VehAge_band_4.0",
+      "VehAge_band_5.0"
+    ],
+    "neutral": [
+      "VehGas_Regular",
+      "Area_B",
+      "Area_C",
+      "Area_D",
+      "Area_E",
+      "Area_F"
+    ]
+  }
+}

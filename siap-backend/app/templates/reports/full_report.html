@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<style>
+    @page {
+        size: A4;
+        margin: 2cm 1.5cm;
+    }
+    body {
+        font-family: Helvetica, Arial, sans-serif;
+        color: #1a1a1a;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+    .cover {
+        text-align: center;
+        padding-top: 8cm;
+        page-break-after: always;
+    }
+    .cover h1 {
+        font-size: 28px;
+        color: #1e3a5f;
+        margin-bottom: 8px;
+    }
+    .cover .subtitle {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 40px;
+    }
+    .cover .meta {
+        font-size: 11px;
+        color: #888;
+    }
+    h2 {
+        font-size: 16px;
+        color: #1e3a5f;
+        border-bottom: 2px solid #1e3a5f;
+        padding-bottom: 4px;
+        margin-top: 28px;
+    }
+    h3 {
+        font-size: 13px;
+        color: #333;
+        margin-top: 16px;
+    }
+    .kpi-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 8px 0;
+        margin: 16px 0;
+    }
+    .kpi-card {
+        background: #f8f9fb;
+        border: 1px solid #e2e5ea;
+        border-radius: 6px;
+        padding: 12px;
+        text-align: center;
+        vertical-align: top;
+        width: 25%;
+    }
+    .kpi-card .value {
+        font-size: 20px;
+        font-weight: bold;
+        color: #1e3a5f;
+    }
+    .kpi-card .label {
+        font-size: 9px;
+        color: #888;
+        text-transform: uppercase;
+    }
+    .kpi-card .benchmark {
+        font-size: 8px;
+        color: #aaa;
+    }
+    .commentary-box {
+        background: #f0f4f8;
+        border-left: 4px solid #1e3a5f;
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-size: 10.5px;
+        font-style: italic;
+    }
+    .chart-img {
+        width: 100%;
+        margin: 12px 0;
+    }
+    table.data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0;
+        font-size: 9.5px;
+    }
+    table.data-table th {
+        background: #1e3a5f;
+        color: white;
+        padding: 6px 8px;
+        text-align: left;
+    }
+    table.data-table td {
+        padding: 5px 8px;
+        border-bottom: 1px solid #eee;
+    }
+    .risk-very-high { color: #dc2626; font-weight: bold; }
+    .risk-high { color: #f97316; font-weight: bold; }
+    .risk-medium { color: #f59e0b; }
+    .risk-low { color: #22c55e; }
+    .source-note {
+        font-size: 8px;
+        color: #999;
+        font-style: italic;
+        margin-top: 4px;
+    }
+    .footer-note {
+        font-size: 9px;
+        color: #666;
+        margin-top: 32px;
+    }
+</style>
+</head>
+<body>
+
+<div class="cover">
+    <h1>SIAP</h1>
+    <p class="subtitle">Rapport Actuariel — Vue d'Ensemble du Portefeuille</p>
+    <p class="meta">Généré le {{ generation_date }}</p>
+    <p class="meta">Smart Insurance Analytics Platform</p>
+</div>
+
+<h2>1. Synthèse Exécutive</h2>
+<div class="commentary-box">{{ commentary.synthese_generale }}</div>
+
+<table class="kpi-table">
+<tr>
+    <td class="kpi-card">
+        <div class="value">{{ "%.2f"|format(global_kpis.kpis.loss_ratio * 100) }}%</div>
+        <div class="label">Loss Ratio</div>
+        <div class="benchmark">Marché : {{ "%.0f"|format(global_kpis.benchmarks.loss_ratio_market * 100) }}%</div>
+    </td>
+    <td class="kpi-card">
+        <div class="value">{{ "%.2f"|format(global_kpis.kpis.combined_ratio * 100) }}%</div>
+        <div class="label">Combined Ratio</div>
+        <div class="benchmark">Marché : {{ "%.0f"|format(global_kpis.benchmarks.combined_ratio_market * 100) }}%</div>
+    </td>
+    <td class="kpi-card">
+        <div class="value">{{ "%.2f"|format(global_kpis.kpis.frequency * 100) }}%</div>
+        <div class="label">Fréquence</div>
+        <div class="benchmark">Marché : {{ "%.0f"|format(global_kpis.benchmarks.frequency_market * 100) }}%</div>
+    </td>
+    <td class="kpi-card">
+        <div class="value">{{ "{:,.0f}".format(global_kpis.kpis.severity) }}€</div>
+        <div class="label">Sévérité Moyenne</div>
+        <div class="benchmark">Marché : {{ "{:,.0f}".format(global_kpis.benchmarks.severity_market) }}€</div>
+    </td>
+</tr>
+</table>
+<p class="source-note">Source : freMTPL2 — {{ "{:,.0f}".format(global_kpis.portfolio.total_policies) }} polices auto françaises</p>
+
+<img class="chart-img" src="data:image/png;base64,{{ charts.loss_combined_ratio }}" alt="Loss Ratio">
+<p class="source-note">Source : Kaggle Insurance Claims — tendances annuelles</p>
+
+<h2>2. Analyse Régionale</h2>
+<table class="data-table">
+    <tr>
+        <th>Région</th><th>Polices</th><th>Fréquence</th>
+        <th>Sévérité</th><th>Loss Ratio</th><th>Niveau de Risque</th>
+    </tr>
+    {% for r in regions %}
+    <tr>
+        <td>{{ r.region_code }}</td>
+        <td>{{ "{:,}".format(r.policies) }}</td>
+        <td>{{ "%.2f"|format(r.frequency * 100) }}%</td>
+        <td>{{ "{:,.0f}".format(r.severity) }}€</td>
+        <td>{{ "%.2f"|format(r.loss_ratio * 100) }}%</td>
+        <td class="risk-{{ r.risk_level|lower|replace(' ', '-') }}">{{ r.risk_level }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<img class="chart-img" src="data:image/png;base64,{{ charts.regions }}" alt="Régions">
+
+<h2>3. Détection de Fraude</h2>
+<div class="commentary-box">{{ commentary.analyse_fraude }}</div>
+
+<table class="kpi-table">
+<tr>
+    <td class="kpi-card">
+        <div class="value">{{ "%.2f"|format(fraud_stats.global_stats.fraud_rate_pct) }}%</div>
+        <div class="label">Taux de Fraude Global</div>
+    </td>
+    <td class="kpi-card">
+        <div class="value">{{ "{:,.0f}".format(fraud_stats.global_stats.avg_fraud_amount) }}$</div>
+        <div class="label">Montant Moyen Fraude</div>
+    </td>
+    <td class="kpi-card">
+        <div class="value">{{ "{:,.0f}".format(fraud_stats.global_stats.avg_legit_amount) }}$</div>
+        <div class="label">Montant Moyen Légitime</div>
+    </td>
+    <td class="kpi-card">&nbsp;</td>
+</tr>
+</table>
+<img class="chart-img" src="data:image/png;base64,{{ charts.fraud_by_type }}" alt="Fraude">
+<p class="source-note">Source : Kaggle Insurance Claims US — modèle XGBoost (AUC=0.82, Rappel=84%)</p>
+
+<h2>4. Réserves IBNR (Méthode Chain Ladder)</h2>
+<div class="commentary-box">{{ commentary.analyse_reserves }}</div>
+
+<table class="kpi-table">
+<tr>
+    <td class="kpi-card">
+        <div class="value">{{ "{:,.0f}".format(reserves.summary.total_ibnr) }}$</div>
+        <div class="label">Total Réserves IBNR</div>
+    </td>
+    <td class="kpi-card">
+        <div class="value">{{ "{:,.0f}".format(reserves.summary.total_premium_cas) }}$</div>
+        <div class="label">Total Primes</div>
+    </td>
+    <td class="kpi-card">
+        <div class="value">{{ "%.2f"|format(reserves.summary.ibnr_to_premium_ratio * 100) }}%</div>
+        <div class="label">Ratio IBNR/Primes</div>
+    </td>
+    <td class="kpi-card">&nbsp;</td>
+</tr>
+</table>
+<img class="chart-img" src="data:image/png;base64,{{ charts.ibnr_development }}" alt="IBNR">
+<p class="source-note">Source : CAS Loss Reserve Database — {{ reserves.company_name }}</p>
+
+<h2>5. Méthodologie</h2>
+<p class="footer-note">
+    Ce rapport est généré automatiquement par la plateforme SIAP, combinant
+    des données issues de trois sources distinctes (freMTPL2, Kaggle Insurance
+    Claims, CAS Loss Reserve Database) à des fins de démonstration. Les
+    réserves IBNR sont calculées par la méthode Chain Ladder (validation
+    backtest : MAPE = 1.24%). Les commentaires interprétatifs sont générés
+    par un modèle de langage (Groq llama-3.3-70b) sur la base des données
+    chiffrées présentées ci-dessus.
+</p>
+
+</body>
+</html>

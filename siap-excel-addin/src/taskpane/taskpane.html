@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SIAP Actuarial Bridge</title>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <link rel="stylesheet" href="taskpane.css"/>
+</head>
+<body>
+  <div id="app">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo">
+        <span class="logo-icon">📊</span>
+        <div>
+          <div class="logo-title">SIAP</div>
+          <div class="logo-sub">Actuarial Bridge</div>
+        </div>
+      </div>
+      <div id="status-badge" class="badge badge-disconnected">Déconnecté</div>
+    </div>
+
+    <!-- LOGIN PANEL (affiché si non connecté) -->
+    <div id="login-panel" class="panel">
+      <h3>Connexion à SIAP</h3>
+      <p class="hint">Connectez-vous pour activer les formules Excel SIAP.</p>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="username" placeholder="admin@siap.com" autocomplete="username"/>
+      </div>
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password"/>
+      </div>
+      <button id="btn-login" class="btn btn-primary" onclick="handleLogin()">
+        Se connecter
+      </button>
+      <div id="login-error" class="error-msg hidden"></div>
+    </div>
+
+    <!-- CONNECTED PANEL (affiché si connecté) -->
+    <div id="connected-panel" class="panel hidden">
+      <div class="user-info">
+        <span>✅ Connecté</span>
+        <button class="btn btn-ghost" onclick="handleLogout()">Déconnexion</button>
+      </div>
+
+      <!-- KPIs temps réel -->
+      <div class="section-title">Portefeuille en temps réel</div>
+      <div class="kpi-grid" id="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Loss Ratio</div>
+          <div class="kpi-value" id="kpi-loss-ratio">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Taux Fraude</div>
+          <div class="kpi-value" id="kpi-fraud-rate">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Réserves IBNR</div>
+          <div class="kpi-value" id="kpi-ibnr">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Fréquence</div>
+          <div class="kpi-value" id="kpi-frequency">—</div>
+        </div>
+      </div>
+
+      <!-- Formules disponibles -->
+      <div class="section-title">Formules disponibles</div>
+      <div class="formula-list">
+        <div class="formula-item" onclick="insertFormula('=SIAP.PRIME(35,80,\"R24\",\"B2\",6,3,\"C\",\"Regular\",1500)')">
+          <div class="formula-name">=SIAP.PRIME()</div>
+          <div class="formula-desc">Prime pure ou commerciale (Module 1)</div>
+        </div>
+        <div class="formula-item" onclick="insertFormula('=SIAP.FRAUDE(\"Multi-vehicle Collision\",\"Major Damage\",0,\"NO\",75000)')">
+          <div class="formula-name">=SIAP.FRAUDE()</div>
+          <div class="formula-desc">Score de fraude 0-100 (Module 2)</div>
+        </div>
+        <div class="formula-item" onclick="insertFormula('=SIAP.IBNR(\"total\")')">
+          <div class="formula-name">=SIAP.IBNR()</div>
+          <div class="formula-desc">Réserves IBNR (Module 3)</div>
+        </div>
+        <div class="formula-item" onclick="insertFormula('=SIAP.KPI(\"loss_ratio\")')">
+          <div class="formula-name">=SIAP.KPI()</div>
+          <div class="formula-desc">KPI portefeuille temps réel (Module 5)</div>
+        </div>
+        <div class="formula-item" onclick="insertFormula('=SIAP.VISION(\"https://example.com/car.jpg\")')">
+          <div class="formula-name">=SIAP.VISION()</div>
+          <div class="formula-desc">Analyse dommages véhicule (Module 4)</div>
+        </div>
+      </div>
+
+      <!-- Démo interactive -->
+      <div class="section-title">Insérer une démo complète</div>
+      <button class="btn btn-secondary" onclick="insertDemoSheet()">
+        📋 Insérer feuille de démo
+      </button>
+      <p class="hint">Insère un tableau avec 5 profils actuariels précalculés via SIAP.</p>
+    </div>
+  </div>
+
+  <script src="taskpane.js"></script>
+</body>
+</html>

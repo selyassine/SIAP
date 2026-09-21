@@ -1,0 +1,106 @@
+{
+  "global": {
+    "total_claims": 344,
+    "fraud_claims": 83,
+    "fraud_rate_pct": 24.13,
+    "avg_fraud_amount": 55795.0,
+    "avg_legit_amount": 50054.0
+  },
+  "by_incident_type": [
+    {
+      "incident_type": "Multi-vehicle Collision",
+      "fraud_rate": 0.3014,
+      "count": 146,
+      "fraud_rate_pct": 30.14
+    },
+    {
+      "incident_type": "Single Vehicle Collision",
+      "fraud_rate": 0.2406,
+      "count": 133,
+      "fraud_rate_pct": 24.06
+    },
+    {
+      "incident_type": "Parked Car",
+      "fraud_rate": 0.1212,
+      "count": 33,
+      "fraud_rate_pct": 12.12
+    },
+    {
+      "incident_type": "Vehicle Theft",
+      "fraud_rate": 0.0938,
+      "count": 32,
+      "fraud_rate_pct": 9.38
+    }
+  ],
+  "by_severity": [
+    {
+      "incident_severity": "Major Damage",
+      "fraud_rate": 0.6,
+      "count": 90,
+      "fraud_rate_pct": 60.0
+    },
+    {
+      "incident_severity": "Minor Damage",
+      "fraud_rate": 0.1288,
+      "count": 132,
+      "fraud_rate_pct": 12.88
+    },
+    {
+      "incident_severity": "Total Loss",
+      "fraud_rate": 0.1087,
+      "count": 92,
+      "fraud_rate_pct": 10.87
+    },
+    {
+      "incident_severity": "Trivial Damage",
+      "fraud_rate": 0.0667,
+      "count": 30,
+      "fraud_rate_pct": 6.67
+    }
+  ],
+  "by_state": [
+    {
+      "incident_state": "OH",
+      "fraud_rate": 0.5,
+      "count": 10,
+      "fraud_rate_pct": 50.0
+    },
+    {
+      "incident_state": "VA",
+      "fraud_rate": 0.3429,
+      "count": 35,
+      "fraud_rate_pct": 34.29
+    },
+    {
+      "incident_state": "SC",
+      "fraud_rate": 0.3152,
+      "count": 92,
+      "fraud_rate_pct": 31.52
+    },
+    {
+      "incident_state": "NC",
+      "fraud_rate": 0.2581,
+      "count": 31,
+      "fraud_rate_pct": 25.81
+    },
+    {
+      "incident_state": "PA",
+      "fraud_rate": 0.1818,
+      "count": 11,
+      "fraud_rate_pct": 18.18
+    },
+    {
+      "incident_state": "NY",
+      "fraud_rate": 0.172,
+      "count": 93,
+      "fraud_rate_pct": 17.2
+    },
+    {
+      "incident_state": "WV",
+      "fraud_rate": 0.1528,
+      "count": 72,
+      "fraud_rate_pct": 15.28
+    }
+  ],
+  "source": "insurance_claims.csv"
+}

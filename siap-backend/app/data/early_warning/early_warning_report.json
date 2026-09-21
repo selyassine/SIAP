@@ -1,0 +1,628 @@
+{
+  "generated_at": "2026-06-23T18:45:27.588682",
+  "source": "CAS Loss Reserve Database \u2014 New Jersey Manufacturers Grp / ppauto",
+  "methodology": {
+    "n_recent_years": 3,
+    "split": "adaptatif par lag",
+    "alpha_fort": 0.05,
+    "alpha_modere": 0.1,
+    "forecast_danger_multiplier": 1.15,
+    "global_ay_hist": [
+      1988,
+      1989,
+      1990,
+      1991,
+      1992,
+      1993,
+      1994
+    ],
+    "global_ay_recent": [
+      1995,
+      1996,
+      1997
+    ]
+  },
+  "global_score": 100,
+  "classification": "ROUGE",
+  "verdict": "Risque \u00e9lev\u00e9 \u2014 r\u00e9vision des r\u00e9serves recommand\u00e9e",
+  "alerts": [
+    {
+      "type": "FORTE",
+      "lag": "2->3",
+      "message": "Lag 2->3 : d\u00e9viation significative (p=0.046<0.05), \u00e9cart +3.8%"
+    },
+    {
+      "type": "FORECAST",
+      "lag": "3->4",
+      "message": "Lag 3->4 : forecast 1999 (1.5151) > seuil (1.4746)"
+    },
+    {
+      "type": "FORTE",
+      "lag": "4->5",
+      "message": "Lag 4->5 : d\u00e9viation significative (p=0.013<0.05), \u00e9cart +6.8%"
+    },
+    {
+      "type": "FORECAST",
+      "lag": "4->5",
+      "message": "Lag 4->5 : forecast 1999 (1.3775) > seuil (1.3389)"
+    }
+  ],
+  "summary": {
+    "n_lags_total": 9,
+    "n_lags_valid": 7,
+    "n_alerts_forte": 2,
+    "n_alerts_modere": 0,
+    "n_trends_hausse": 4,
+    "n_forecast_danger": 2,
+    "max_ecart_pct": 6.76
+  },
+  "reserves": {
+    "standard": 494113.0,
+    "historical_ldfs": 489060.0,
+    "recent_ldfs": 508724.0,
+    "delta_hist_pct": -1.02,
+    "delta_recent_pct": 2.96,
+    "uncertainty_range": 19664.0,
+    "uncertainty_pct": 3.98
+  },
+  "lag_details": [
+    {
+      "lag": "1->2",
+      "lag_num": 1,
+      "n_hist": 6,
+      "n_recent": 3,
+      "mean_hist": 1.9641535711675981,
+      "mean_recent": 2.062969975886315,
+      "std_hist": 0.033117005375624495,
+      "std_recent": 0.08888356042791802,
+      "ecart_pct": 5.030991780341047,
+      "t_stat": 1.8621,
+      "p_value": 0.1877,
+      "alert_level": "AUCUNE",
+      "slope": 0.01602,
+      "r_squared": 0.3773,
+      "trend_pvalue": 0.0784,
+      "trend_dir": "HAUSSE",
+      "trend_signif": true,
+      "forecast_1998": 2.0933,
+      "forecast_1999": 2.1094,
+      "forecast_danger": false,
+      "danger_threshold": 2.2588
+    },
+    {
+      "lag": "2->3",
+      "lag_num": 2,
+      "n_hist": 5,
+      "n_recent": 3,
+      "mean_hist": 1.3929193358671659,
+      "mean_recent": 1.4452251158241565,
+      "std_hist": 0.04096535384521053,
+      "std_recent": 0.015066319836102798,
+      "ecart_pct": 3.755119094848912,
+      "t_stat": 2.5791,
+      "p_value": 0.0456,
+      "alert_level": "FORTE",
+      "slope": 0.015336,
+      "r_squared": 0.8034,
+      "trend_pvalue": 0.0026,
+      "trend_dir": "HAUSSE",
+      "trend_signif": true,
+      "forecast_1998": 1.5116,
+      "forecast_1999": 1.5269,
+      "forecast_danger": false,
+      "danger_threshold": 1.6019
+    },
+    {
+      "lag": "3->4",
+      "lag_num": 3,
+      "n_hist": 4,
+      "n_recent": 3,
+      "mean_hist": 1.282225751264793,
+      "mean_recent": 1.360205192922048,
+      "std_hist": 0.06989741529416231,
+      "std_recent": 0.031488380521619445,
+      "ecart_pct": 6.081568832971554,
+      "t_stat": 1.9795,
+      "p_value": 0.113,
+      "alert_level": "AUCUNE",
+      "slope": 0.0249,
+      "r_squared": 0.6414,
+      "trend_pvalue": 0.0304,
+      "trend_dir": "HAUSSE",
+      "trend_signif": true,
+      "forecast_1998": 1.4902,
+      "forecast_1999": 1.5151,
+      "forecast_danger": true,
+      "danger_threshold": 1.4746
+    },
+    {
+      "lag": "4->5",
+      "lag_num": 4,
+      "n_hist": 3,
+      "n_recent": 3,
+      "mean_hist": 1.1642396482229618,
+      "mean_recent": 1.242890055831922,
+      "std_hist": 0.024004677564123396,
+      "std_recent": 0.020155174959338832,
+      "ecart_pct": 6.75551702168951,
+      "t_stat": 4.3462,
+      "p_value": 0.013,
+      "alert_level": "FORTE",
+      "slope": 0.020372,
+      "r_squared": 0.6459,
+      "trend_pvalue": 0.054,
+      "trend_dir": "HAUSSE",
+      "trend_signif": true,
+      "forecast_1998": 1.3572,
+      "forecast_1999": 1.3775,
+      "forecast_danger": true,
+      "danger_threshold": 1.3389
+    },
+    {
+      "lag": "5->6",
+      "lag_num": 5,
+      "n_hist": 2,
+      "n_recent": 3,
+      "mean_hist": 1.076498440767312,
+      "mean_recent": 1.0902504156458959,
+      "std_hist": 0.025603892104937718,
+      "std_recent": 0.01660120095883828,
+      "ecart_pct": 1.2774728097870467,
+      "t_stat": 0.6713,
+      "p_value": 0.5867,
+      "alert_level": "AUCUNE",
+      "slope": 0.002617,
+      "r_squared": 0.0478,
+      "trend_pvalue": 0.724,
+      "trend_dir": "STABLE",
+      "trend_signif": false,
+      "forecast_1998": 1.1066,
+      "forecast_1999": 1.1092,
+      "forecast_danger": false,
+      "danger_threshold": 1.238
+    },
+    {
+      "lag": "6->7",
+      "lag_num": 6,
+      "n_hist": 2,
+      "n_recent": 2,
+      "mean_hist": 1.0315588323661484,
+      "mean_recent": 1.0334195456258972,
+      "std_hist": 0.0029086776593423903,
+      "std_recent": 0.007595125637553109,
+      "ecart_pct": 0.18037878222425396,
+      "t_stat": 0.3236,
+      "p_value": 0.7909,
+      "alert_level": "AUCUNE",
+      "slope": 8.2e-05,
+      "r_squared": 0.0005,
+      "trend_pvalue": 0.9782,
+      "trend_dir": "STABLE",
+      "trend_signif": false,
+      "forecast_1998": 1.0341,
+      "forecast_1999": 1.0342,
+      "forecast_danger": false,
+      "danger_threshold": 1.1863
+    },
+    {
+      "lag": "7->8",
+      "lag_num": 7,
+      "n_hist": 2,
+      "n_recent": 1,
+      "mean_hist": 1.0128597127266346,
+      "mean_recent": 1.0130346273433464,
+      "std_hist": 0.0036739522632216973,
+      "std_recent": 0.0,
+      "ecart_pct": 0.01726938237487458,
+      "t_stat": null,
+      "p_value": 1.0,
+      "alert_level": "AUCUNE",
+      "slope": 0.001386,
+      "r_squared": 0.2844,
+      "trend_pvalue": 0.6419,
+      "trend_dir": "STABLE",
+      "trend_signif": false,
+      "forecast_1998": 1.0246,
+      "forecast_1999": 1.026,
+      "forecast_danger": false,
+      "danger_threshold": 1.1648
+    },
+    {
+      "lag": "8->9",
+      "lag_num": 8,
+      "n_hist": 0,
+      "n_recent": 2,
+      "mean_hist": null,
+      "mean_recent": 1.0164720412424662,
+      "std_hist": null,
+      "std_recent": 0.0,
+      "ecart_pct": null,
+      "t_stat": null,
+      "p_value": null,
+      "alert_level": "DONN\u00c9ES INSUFFISANTES",
+      "slope": null,
+      "r_squared": null,
+      "trend_pvalue": null,
+      "trend_dir": "IND\u00c9TERMIN\u00c9",
+      "trend_signif": false,
+      "forecast_1998": null,
+      "forecast_1999": null,
+      "forecast_danger": false,
+      "danger_threshold": null
+    },
+    {
+      "lag": "9->10",
+      "lag_num": 9,
+      "n_hist": 0,
+      "n_recent": 1,
+      "mean_hist": null,
+      "mean_recent": 1.0031296000791678,
+      "std_hist": null,
+      "std_recent": 0.0,
+      "ecart_pct": null,
+      "t_stat": null,
+      "p_value": null,
+      "alert_level": "DONN\u00c9ES INSUFFISANTES",
+      "slope": null,
+      "r_squared": null,
+      "trend_pvalue": null,
+      "trend_dir": "IND\u00c9TERMIN\u00c9",
+      "trend_signif": false,
+      "forecast_1998": null,
+      "forecast_1999": null,
+      "forecast_danger": false,
+      "danger_threshold": null
+    }
+  ],
+  "ldf_series": {
+    "1->2": {
+      "historical": [
+        {
+          "year": 1988,
+          "ldf": 1.9893
+        },
+        {
+          "year": 1989,
+          "ldf": 1.9405
+        },
+        {
+          "year": 1990,
+          "ldf": 1.9326
+        },
+        {
+          "year": 1991,
+          "ldf": 1.9573
+        },
+        {
+          "year": 1992,
+          "ldf": 1.9467
+        },
+        {
+          "year": 1993,
+          "ldf": 2.0185
+        }
+      ],
+      "recent": [
+        {
+          "year": 1994,
+          "ldf": 2.0235
+        },
+        {
+          "year": 1995,
+          "ldf": 2.1648
+        },
+        {
+          "year": 1996,
+          "ldf": 2.0007
+        }
+      ],
+      "forecast": [
+        {
+          "year": 1998,
+          "ldf": 2.0933
+        },
+        {
+          "year": 1999,
+          "ldf": 2.1094
+        }
+      ],
+      "mean_hist": 1.9641535711675981,
+      "mean_recent": 2.062969975886315,
+      "danger_threshold": 2.2588
+    },
+    "2->3": {
+      "historical": [
+        {
+          "year": 1988,
+          "ldf": 1.3506
+        },
+        {
+          "year": 1989,
+          "ldf": 1.3668
+        },
+        {
+          "year": 1990,
+          "ldf": 1.3745
+        },
+        {
+          "year": 1991,
+          "ldf": 1.4286
+        },
+        {
+          "year": 1992,
+          "ldf": 1.4442
+        }
+      ],
+      "recent": [
+        {
+          "year": 1993,
+          "ldf": 1.4351
+        },
+        {
+          "year": 1994,
+          "ldf": 1.4625
+        },
+        {
+          "year": 1995,
+          "ldf": 1.438
+        }
+      ],
+      "forecast": [
+        {
+          "year": 1998,
+          "ldf": 1.5116
+        },
+        {
+          "year": 1999,
+          "ldf": 1.5269
+        }
+      ],
+      "mean_hist": 1.3929193358671659,
+      "mean_recent": 1.4452251158241565,
+      "danger_threshold": 1.6019
+    },
+    "3->4": {
+      "historical": [
+        {
+          "year": 1988,
+          "ldf": 1.2208
+        },
+        {
+          "year": 1989,
+          "ldf": 1.2279
+        },
+        {
+          "year": 1990,
+          "ldf": 1.3153
+        },
+        {
+          "year": 1991,
+          "ldf": 1.3649
+        }
+      ],
+      "recent": [
+        {
+          "year": 1992,
+          "ldf": 1.3596
+        },
+        {
+          "year": 1993,
+          "ldf": 1.392
+        },
+        {
+          "year": 1994,
+          "ldf": 1.329
+        }
+      ],
+      "forecast": [
+        {
+          "year": 1998,
+          "ldf": 1.4902
+        },
+        {
+          "year": 1999,
+          "ldf": 1.5151
+        }
+      ],
+      "mean_hist": 1.282225751264793,
+      "mean_recent": 1.360205192922048,
+      "danger_threshold": 1.4746
+    },
+    "4->5": {
+      "historical": [
+        {
+          "year": 1988,
+          "ldf": 1.1492
+        },
+        {
+          "year": 1989,
+          "ldf": 1.1516
+        },
+        {
+          "year": 1990,
+          "ldf": 1.1919
+        }
+      ],
+      "recent": [
+        {
+          "year": 1991,
+          "ldf": 1.2619
+        },
+        {
+          "year": 1992,
+          "ldf": 1.245
+        },
+        {
+          "year": 1993,
+          "ldf": 1.2218
+        }
+      ],
+      "forecast": [
+        {
+          "year": 1998,
+          "ldf": 1.3572
+        },
+        {
+          "year": 1999,
+          "ldf": 1.3775
+        }
+      ],
+      "mean_hist": 1.1642396482229618,
+      "mean_recent": 1.242890055831922,
+      "danger_threshold": 1.3389
+    },
+    "5->6": {
+      "historical": [
+        {
+          "year": 1988,
+          "ldf": 1.0584
+        },
+        {
+          "year": 1989,
+          "ldf": 1.0946
+        }
+      ],
+      "recent": [
+        {
+          "year": 1990,
+          "ldf": 1.1066
+        },
+        {
+          "year": 1991,
+          "ldf": 1.0907
+        },
+        {
+          "year": 1992,
+          "ldf": 1.0735
+        }
+      ],
+      "forecast": [
+        {
+          "year": 1998,
+          "ldf": 1.1066
+        },
+        {
+          "year": 1999,
+          "ldf": 1.1092
+        }
+      ],
+      "mean_hist": 1.076498440767312,
+      "mean_recent": 1.0902504156458959,
+      "danger_threshold": 1.238
+    },
+    "6->7": {
+      "historical": [
+        {
+          "year": 1988,
+          "ldf": 1.0295
+        },
+        {
+          "year": 1989,
+          "ldf": 1.0336
+        }
+      ],
+      "recent": [
+        {
+          "year": 1990,
+          "ldf": 1.0388
+        },
+        {
+          "year": 1991,
+          "ldf": 1.028
+        }
+      ],
+      "forecast": [
+        {
+          "year": 1998,
+          "ldf": 1.0341
+        },
+        {
+          "year": 1999,
+          "ldf": 1.0342
+        }
+      ],
+      "mean_hist": 1.0315588323661484,
+      "mean_recent": 1.0334195456258972,
+      "danger_threshold": 1.1863
+    },
+    "7->8": {
+      "historical": [
+        {
+          "year": 1988,
+          "ldf": 1.0103
+        },
+        {
+          "year": 1989,
+          "ldf": 1.0155
+        }
+      ],
+      "recent": [
+        {
+          "year": 1990,
+          "ldf": 1.013
+        }
+      ],
+      "forecast": [
+        {
+          "year": 1998,
+          "ldf": 1.0246
+        },
+        {
+          "year": 1999,
+          "ldf": 1.026
+        }
+      ],
+      "mean_hist": 1.0128597127266346,
+      "mean_recent": 1.0130346273433464,
+      "danger_threshold": 1.1648
+    },
+    "8->9": {
+      "historical": [],
+      "recent": [
+        {
+          "year": 1988,
+          "ldf": 1.0201
+        },
+        {
+          "year": 1989,
+          "ldf": 1.0129
+        }
+      ],
+      "forecast": [
+        {
+          "year": 1998,
+          "ldf": null
+        },
+        {
+          "year": 1999,
+          "ldf": null
+        }
+      ],
+      "mean_hist": null,
+      "mean_recent": 1.0164720412424662,
+      "danger_threshold": null
+    },
+    "9->10": {
+      "historical": [],
+      "recent": [
+        {
+          "year": 1988,
+          "ldf": 1.0031
+        }
+      ],
+      "forecast": [
+        {
+          "year": 1998,
+          "ldf": null
+        },
+        {
+          "year": 1999,
+          "ldf": null
+        }
+      ],
+      "mean_hist": null,
+      "mean_recent": 1.0031296000791678,
+      "danger_threshold": null
+    }
+  }
+}

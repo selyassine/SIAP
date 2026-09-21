@@ -1,0 +1,98 @@
+{
+  "company": {
+    "grname": "New Jersey Manufacturers Grp",
+    "lob": "ppauto"
+  },
+  "reserves_by_year": {
+    "1988": {
+      "ultimate": 81094.0,
+      "paid_to_date": 81094.0,
+      "ibnr_reserve": 0.0,
+      "development_pct": 100.0
+    },
+    "1989": {
+      "ultimate": 92445.0,
+      "paid_to_date": 92157.0,
+      "ibnr_reserve": 288.0,
+      "development_pct": 99.7
+    },
+    "1990": {
+      "ultimate": 101965.0,
+      "paid_to_date": 100024.0,
+      "ibnr_reserve": 1941.0,
+      "development_pct": 98.1
+    },
+    "1991": {
+      "ultimate": 116351.0,
+      "paid_to_date": 112668.0,
+      "ibnr_reserve": 3683.0,
+      "development_pct": 96.8
+    },
+    "1992": {
+      "ultimate": 128625.0,
+      "paid_to_date": 120640.0,
+      "ibnr_reserve": 7985.0,
+      "development_pct": 93.8
+    },
+    "1993": {
+      "ultimate": 152209.0,
+      "paid_to_date": 131582.0,
+      "ibnr_reserve": 20627.0,
+      "development_pct": 86.4
+    },
+    "1994": {
+      "ultimate": 158773.0,
+      "paid_to_date": 113546.0,
+      "ibnr_reserve": 45227.0,
+      "development_pct": 71.5
+    },
+    "1995": {
+      "ultimate": 184681.0,
+      "paid_to_date": 99874.0,
+      "ibnr_reserve": 84807.0,
+      "development_pct": 54.1
+    },
+    "1996": {
+      "ultimate": 211617.0,
+      "paid_to_date": 80683.0,
+      "ibnr_reserve": 130934.0,
+      "development_pct": 38.1
+    },
+    "1997": {
+      "ultimate": 245219.0,
+      "paid_to_date": 46599.0,
+      "ibnr_reserve": 198620.0,
+      "development_pct": 19.0
+    }
+  },
+  "premium_by_year": {
+    "1988": 91247.0,
+    "1989": 89687.0,
+    "1990": 106874.0,
+    "1991": 140397.0,
+    "1992": 170136.0,
+    "1993": 175761.0,
+    "1994": 193091.0,
+    "1995": 254431.0,
+    "1996": 280692.0,
+    "1997": 323340.0
+  },
+  "reserve_to_premium": {
+    "1988": 0.0,
+    "1989": 0.0032,
+    "1990": 0.0182,
+    "1991": 0.0262,
+    "1992": 0.0469,
+    "1993": 0.1174,
+    "1994": 0.2342,
+    "1995": 0.3333,
+    "1996": 0.4665,
+    "1997": 0.6143
+  },
+  "summary": {
+    "total_ibnr": 494112.0,
+    "total_premium_cas": 1825656.0,
+    "ibnr_to_premium_ratio": 0.2706
+  },
+  "source": "CAS Loss Reserve Database (via chainladder.load_sample)"
+}

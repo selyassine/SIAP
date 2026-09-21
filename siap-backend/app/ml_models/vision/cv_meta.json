@@ -1,0 +1,111 @@
+{
+  "model_file": "yolo_car_damage.pt",
+  "model_type": "YOLOv8n",
+  "dataset": "car-damage by Skillfactory (Roboflow)",
+  "n_classes": 31,
+  "class_names": [
+    "Front-Windscreen-Damage",
+    "Headlight-Damage",
+    "Major-Rear-Bumper-Dent",
+    "Rear-windscreen-Damage",
+    "RunningBoard-Dent",
+    "Sidemirror-Damage",
+    "Signlight-Damage",
+    "Taillight-Damage",
+    "bonnet-dent",
+    "damaged",
+    "damaged-door",
+    "damaged-front-bumper",
+    "damaged-head-light",
+    "damaged-hood",
+    "damaged-rear-bumper",
+    "damaged-rear-window",
+    "damaged-tail-light",
+    "damaged-trunk",
+    "damaged-window",
+    "damaged-windscreen",
+    "dent",
+    "dent-or-scratch",
+    "doorouter-dent",
+    "fender-dent",
+    "front-bumper-dent",
+    "medium-Bodypanel-Dent",
+    "pillar-dent",
+    "quaterpanel-dent",
+    "rear-bumper-dent",
+    "roof-dent",
+    "scratch"
+  ],
+  "severity_mapping": {
+    "scratch": "Minor",
+    "dent": "Minor",
+    "dent-or-scratch": "Minor",
+    "Sidemirror-Damage": "Minor",
+    "Signlight-Damage": "Minor",
+    "medium-Bodypanel-Dent": "Minor",
+    "damaged-door": "Moderate",
+    "damaged-front-bumper": "Moderate",
+    "damaged-rear-bumper": "Moderate",
+    "front-bumper-dent": "Moderate",
+    "rear-bumper-dent": "Moderate",
+    "doorouter-dent": "Moderate",
+    "fender-dent": "Moderate",
+    "bonnet-dent": "Moderate",
+    "Headlight-Damage": "Moderate",
+    "Taillight-Damage": "Moderate",
+    "roof-dent": "Moderate",
+    "quaterpanel-dent": "Moderate",
+    "pillar-dent": "Moderate",
+    "RunningBoard-Dent": "Moderate",
+    "Major-Rear-Bumper-Dent": "Moderate",
+    "damaged-hood": "Severe",
+    "damaged-trunk": "Severe",
+    "damaged-window": "Severe",
+    "damaged-windscreen": "Severe",
+    "Front-Windscreen-Damage": "Severe",
+    "Rear-windscreen-Damage": "Severe",
+    "damaged-rear-window": "Severe",
+    "damaged-head-light": "Severe",
+    "damaged-tail-light": "Severe",
+    "damaged": "Total Loss"
+  },
+  "cost_estimate": {
+    "Minor": {
+      "min": 150,
+      "central": 600,
+      "max": 1500,
+      "currency": "EUR"
+    },
+    "Moderate": {
+      "min": 1200,
+      "central": 3500,
+      "max": 7000,
+      "currency": "EUR"
+    },
+    "Severe": {
+      "min": 5000,
+      "central": 12000,
+      "max": 20000,
+      "currency": "EUR"
+    },
+    "Total Loss": {
+      "min": 15000,
+      "central": 25000,
+      "max": 50000,
+      "currency": "EUR"
+    }
+  },
+  "conf_threshold": 0.15,
+  "iou_threshold": 0.45,
+  "imgsz": 640,
+  "performance": {
+    "map50": 0.5988468761551191,
+    "map50_95": 0.37136522744186734,
+    "precision": 0.7726135958857274,
+    "recall": 0.6290452480366066
+  },
+  "fraud_coherence": {
+    "investigation_threshold": 60,
+    "review_threshold": 30
+  }
+}

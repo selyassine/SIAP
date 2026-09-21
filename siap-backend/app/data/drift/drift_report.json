@@ -1,0 +1,134 @@
+{
+  "generated_at": "2026-06-24T09:12:58.156907",
+  "model_monitored": "Module 1 \u2014 LightGBM Frequency Model",
+  "dataset": "freq_test.csv (132,882 polices)",
+  "methodology": {
+    "split_ref_pct": 80.0,
+    "n_ref": 106305,
+    "n_recent": 26577,
+    "psi_stable_threshold": 0.1,
+    "psi_watch_threshold": 0.25,
+    "ks_alpha": 0.05,
+    "variables_monitored": [
+      "BonusMalus",
+      "VehAge",
+      "DrivAge",
+      "Density",
+      "VehPower",
+      "Region_R82",
+      "Region_R91",
+      "Region_R93",
+      "BonusMalus_band_4.0",
+      "VehAge_band_1.0"
+    ]
+  },
+  "stability_score": 100.0,
+  "stability_class": "STABLE",
+  "stability_color": "VERT",
+  "verdict": "Modele stable \u2014 aucune action requise",
+  "alerts": [],
+  "score_detail": {
+    "psi_variables": 40.0,
+    "psi_predictions": 30.0,
+    "ks_test": 15.0,
+    "gini": 15.0
+  },
+  "psi_results": [
+    {
+      "variable": "BonusMalus",
+      "psi": 0.0001,
+      "status": "STABLE",
+      "mean_ref": 59.7159,
+      "mean_rec": 59.6428,
+      "delta_mean_pct": -0.12
+    },
+    {
+      "variable": "VehAge",
+      "psi": 0.0005,
+      "status": "STABLE",
+      "mean_ref": 7.068,
+      "mean_rec": 7.0898,
+      "delta_mean_pct": 0.31
+    },
+    {
+      "variable": "DrivAge",
+      "psi": 0.0004,
+      "status": "STABLE",
+      "mean_ref": 45.4809,
+      "mean_rec": 45.5971,
+      "delta_mean_pct": 0.26
+    },
+    {
+      "variable": "Density",
+      "psi": 0.0001,
+      "status": "STABLE",
+      "mean_ref": 1784.5796,
+      "mean_rec": 1780.8779,
+      "delta_mean_pct": -0.21
+    },
+    {
+      "variable": "VehPower",
+      "psi": 0.0001,
+      "status": "STABLE",
+      "mean_ref": 6.4381,
+      "mean_rec": 6.4526,
+      "delta_mean_pct": 0.22
+    },
+    {
+      "variable": "Region_R82",
+      "psi": 0.0,
+      "status": "STABLE",
+      "mean_ref": 0.1247,
+      "mean_rec": 0.1233,
+      "delta_mean_pct": -1.14
+    },
+    {
+      "variable": "Region_R91",
+      "psi": 0.0,
+      "status": "STABLE",
+      "mean_ref": 0.0527,
+      "mean_rec": 0.0515,
+      "delta_mean_pct": -2.2
+    },
+    {
+      "variable": "Region_R93",
+      "psi": 0.0,
+      "status": "STABLE",
+      "mean_ref": 0.1181,
+      "mean_rec": 0.1183,
+      "delta_mean_pct": 0.21
+    },
+    {
+      "variable": "BonusMalus_band_4.0",
+      "psi": 0.0,
+      "status": "STABLE",
+      "mean_ref": 0.0107,
+      "mean_rec": 0.0108,
+      "delta_mean_pct": 1.32
+    },
+    {
+      "variable": "VehAge_band_1.0",
+      "psi": 0.0,
+      "status": "STABLE",
+      "mean_ref": 0.0,
+      "mean_rec": 0.0,
+      "delta_mean_pct": 0.0
+    }
+  ],
+  "prediction_drift": {
+    "psi": 0.0011,
+    "psi_status": "STABLE",
+    "ks_statistic": 0.0068,
+    "ks_pvalue": 0.285094,
+    "drift_detected": false,
+    "mean_ref": 0.12147,
+    "mean_rec": 0.12126,
+    "delta_mean_pct": -0.18
+  },
+  "performance": {
+    "gini_ref": 0.2505,
+    "gini_recent": 0.2664,
+    "gini_delta": 0.0159,
+    "degradation": false
+  }
+}
