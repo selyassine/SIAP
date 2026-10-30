@@ -29,7 +29,7 @@ def client():
 @pytest.fixture
 def auth_token(client):
     """Crée un utilisateur unique et renvoie un jeton d'accès valide."""
-    email = f"pytest_{uuid.uuid4().hex[:10]}@siap.test"
+    email = f"pytest_{uuid.uuid4().hex[:10]}@example.com"
     r = client.post("/api/v1/auth/register",
                     json={"email": email, "password": "test1234", "full_name": "Pytest"})
     assert r.status_code == 200, r.text
