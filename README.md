@@ -2,6 +2,7 @@
 
 **Plateforme d'analyse pour l'assurance non-vie (automobile) : tarification GLM + LightGBM, détection de fraude, provisionnement IBNR, expertise de dommages par vision par ordinateur, pilotage des risques, audit d'équité, rapports automatisés et assistant IA. Elle comprend une API FastAPI, une interface Next.js et un complément Excel.**
 
+[![Tests backend](https://github.com/selyassine/SIAP/actions/workflows/tests.yml/badge.svg)](https://github.com/selyassine/SIAP/actions/workflows/tests.yml)
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
 ![LightGBM](https://img.shields.io/badge/LightGBM-02569B)
@@ -89,7 +90,7 @@ source venv/bin/activate              # Windows : venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env                  # renseigner GROQ_API_KEY et SECRET_KEY
 uvicorn app.main:app --reload         # les tables sont créées au démarrage (SQLite par défaut)
-pytest                                # tests de l'API
+pytest                                # 68 tests de l'API (ceux de l'assistant demandent GROQ_API_KEY)
 ```
 
 Ou avec Docker : `docker compose up --build` depuis `siap-backend/`.

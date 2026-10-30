@@ -2,7 +2,7 @@ name: Tests backend
 
 on:
   push:
-    branches: [main, ci-tests-backend]
+    branches: [main]
   pull_request:
 
 jobs:
