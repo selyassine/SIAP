@@ -1,223 +1,124 @@
 # SIAP — Smart Insurance Analytics Platform
 
-**Plateforme SaaS actuarielle intégrant science actuarielle, data science, vision par ordinateur et développement full-stack pour couvrir l'ensemble du cycle de vie des polices et sinistres en assurance non-vie.**
+**Plateforme d'analyse pour l'assurance non-vie (automobile) : tarification GLM + LightGBM, détection de fraude, provisionnement IBNR, expertise de dommages par vision par ordinateur, pilotage des risques, audit d'équité, rapports automatisés et assistant IA. Elle comprend une API FastAPI, une interface Next.js et un complément Excel.**
 
-Projet de fin d'études (PFE) — Cycle Ingénieur Actuariat & Data Science, ESPRIT.
-Projet académique, sans structure d'accueil corporate.
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![LightGBM](https://img.shields.io/badge/LightGBM-02569B)
+![XGBoost](https://img.shields.io/badge/XGBoost-EB5E28)
+![YOLOv8](https://img.shields.io/badge/YOLOv8-vision-111F68)
+![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)
+![Licence MIT](https://img.shields.io/badge/licence-MIT-green)
 
----
+> Projet personnel. Les données sont publiques (freMTPL2, CAS Loss Reserve Database, jeux Kaggle) ; aucun résultat ne constitue un avis actuariel.
 
-## Table des matières
+## En bref
 
-1. [Présentation](#présentation)
-2. [Architecture générale](#architecture-générale)
-3. [Modules fonctionnels](#modules-fonctionnels)
-4. [Modules bonus](#modules-bonus)
-5. [Stack technique](#stack-technique)
-6. [Jeux de données](#jeux-de-données)
-7. [Métriques clés](#métriques-clés)
-8. [Installation](#installation)
-9. [Structure du dépôt](#structure-du-dépôt)
-10. [Démarche de développement](#démarche-de-développement)
-11. [Statut du projet](#statut-du-projet)
+- **Rigueur actuarielle et ML moderne** : GLM Gamma et Poisson à côté de LightGBM pour la tarification, Chain Ladder, Mack, Bornhuetter-Ferguson et Bootstrap ODP pour les réserves.
+- **Chaque modèle suit le même chemin** : notebook validé, artefacts exportés, service backend, endpoint d'API, page de l'interface.
+- **Au-delà des modèles** : audit de biais du tarif par SHAP, système d'alerte précoce sur les réserves, stress-tests Monte-Carlo, suivi de la dérive des modèles.
+- **Les actuaires gardent Excel** : le complément « SIAP Actuarial Bridge » expose le tarif et le score de fraude comme formules natives (`=SIAP.PRIME(…)`, `=SIAP.FRAUDE(…)`).
 
----
+## Résultats clés
 
-## Présentation
+| Module | Méthode | Résultat |
+| --- | --- | --- |
+| Tarification | GLM Gamma + LightGBM sur freMTPL2 (≈ 678 000 polices) | fréquence observée 10,07 %, coût moyen 2 278,54 € |
+| Détection de fraude | XGBoost + SMOTE, Isolation Forest | AUC ≈ 0,82, rappel ≈ 84 % |
+| Provisionnement IBNR | Chain Ladder / Mack, Bootstrap ODP, Bornhuetter-Ferguson | réserve centrale ≈ 494 113 ; Bootstrap à moins de 0,3 % ; BF ≈ +20 % (loss ratio a priori 91,34 %) |
+| Vision par ordinateur | YOLOv8n affiné sur plus de 8 800 images | détection des dommages et contrôle de cohérence avec le score de fraude |
+| Pilotage des risques | KPI par région, par année, réserves, fraude | 10/10 contrôles actuariels de cohérence |
 
-SIAP est une plateforme unifiée destinée aux compagnies d'assurance non-vie, couvrant :
-
-- la **tarification** (pricing actuariel + machine learning),
-- la **détection de fraude**,
-- le **provisionnement IBNR**,
-- l'**expertise sinistres assistée par vision par ordinateur**,
-- le **pilotage des risques** via un tableau de bord multi-sources,
-- la **génération automatisée de rapports actuariels**,
-- un **assistant IA conversationnel** pour l'interrogation des données et modèles.
-
-Le projet illustre une approche hybride : rigueur actuarielle classique (GLM, Chain Ladder, Bornhuetter-Ferguson, Lee-Carter) combinée aux techniques modernes de data science et de MLOps (LightGBM, XGBoost, YOLOv8, CamemBERT, RAG).
-
----
-
-## Architecture générale
+## Architecture
 
 ```
-┌─────────────────────┐      ┌──────────────────────┐      ┌──────────────────────┐
-│   Frontend (Next.js) │ <──> │  Backend (FastAPI)    │ <──> │  PostgreSQL + Alembic │
-│  React / Tailwind /  │      │  SQLAlchemy / JWT      │      │                       │
-│  Recharts             │      │  Endpoints REST/modules│      └──────────────────────┘
-└─────────────────────┘      └──────────────────────┘
-                                        │
-                                        ▼
-                          ┌───────────────────────────┐
-                          │  Couche Modèles ML/Actuariat│
-                          │  LightGBM · XGBoost · GLM   │
-                          │  YOLOv8n · SHAP · chainladder│
-                          │  Groq llama-3.3-70b          │
-                          └───────────────────────────┘
+┌────────────────────┐   ┌──────────────────────────┐   ┌──────────────────────────────┐
+│  siap-frontend      │   │  siap-backend             │   │  Modèles et artefacts          │
+│  Next.js, React,    │◄─►│  FastAPI, SQLAlchemy, JWT │◄─►│  LightGBM, XGBoost, GLM,       │
+│  Tailwind, Recharts │   │  SQLite ou PostgreSQL     │   │  YOLOv8n, Chain Ladder, SHAP   │
+└────────────────────┘   └────────────┬─────────────┘   └──────────────────────────────┘
+┌────────────────────┐                │
+│  siap-excel-addin   │◄───────────────┤           Groq (Llama 3.3 70B) : assistant et rapports
+│  formules Excel     │                │           WeasyPrint : rapports PDF
+└────────────────────┘                ▼
+                                 module1 … module11 : notebooks de modélisation et artefacts
 ```
 
-**Pattern de développement suivi pour chaque module :**
-notebook (validation Google Colab) → export d'artefacts (`.pkl` / `.json`) → service backend → endpoint API → intégration frontend.
+## Modules
 
----
+| Domaine | Ce qu'il fait | Notebook | Endpoint |
+| --- | --- | --- | --- |
+| Tarification | Prime pure, calcul unitaire ou par lot | `module1/` | `/api/v1/pricing` |
+| Fraude | Score de fraude, détection par lot | `module2/` | `/api/v1/fraud` |
+| Provisionnement | Triangles, IBNR, distribution Bootstrap | `module3/` | `/api/v1/reserving` |
+| Vision | Détection des dommages sur photo | `module4/` | `/api/v1/vision` |
+| Pilotage | Tableau de bord des KPI | `module5/` | `/api/v1/monitoring` |
+| Sinistres | Création, suivi, scoring automatique | — | `/api/v1/claims` |
+| Détecteur de biais | Audit SHAP du tarif (variables proxy) | `module8/` | `/api/v1/audit/bias-report` |
+| Alerte précoce | Dérive des réserves | `module9/` | `/api/v1/early-warning` |
+| Stress-tests | Monte-Carlo sur le portefeuille | `module10/` | `/api/v1/monte-carlo` |
+| Dérive des modèles | Suivi de la dérive des données et des scores | `module11/` | `/api/v1/drift` |
+| Rapports | Rapports actuariels PDF | — | `/api/v1/reports` |
+| Assistant IA | Questions sur les données et les modèles | — | `/api/v1/assistant` |
 
-## Modules fonctionnels
-
-### Module 1 — Smart Pricing
-- Modèles : **LightGBM** + **GLM Gamma**
-- Dataset : freMTPL2 (≈ 678 000 polices d'assurance auto françaises)
-- Pipeline : EDA (fréquence de sinistre 10,07 %, coût moyen 2 278,54 €), feature engineering avec winsorisation actuarielle, bandes d'âge / bonus-malus / véhicule, préparation Poisson GLM
-
-### Module 2 — Détection de fraude
-- Modèle : **XGBoost** + **SMOTE** (gestion du déséquilibre de classes)
-- Performance : **AUC ≈ 0,82**, **Recall ≈ 84 %**
-
-### Module 3 — Provisionnement IBNR
-- Méthodes : **Chain Ladder**, **Mack**, **Bornhuetter-Ferguson**, **Bootstrap ODP**
-- Implémentation via la librairie `chainladder`
-- Résultats validés : réserve centrale CL/Mack ≈ 494 113, Bootstrap à 0,3 % près, BF ≈ 20 % plus élevée (loss ratio a priori de 91,34 %)
-
-### Module 4 — Vision par ordinateur
-- Modèle : **YOLOv8n** fine-tuné sur plus de **8 800 images**
-- Fonction : détection automatique des dommages véhicules
-- Bonus : vérification de cohérence avec le score de fraude
-
-### Module 5 — Tableau de bord de pilotage des risques
-- Agrégation de KPI multi-sources sur **4 onglets**
-- Validé par **10/10 contrôles actuariels**
-
-### Module 6 — Génération de rapports PDF
-- Outils : **WeasyPrint** + **Groq**
-- Génération automatisée de rapports actuariels formatés
-
-### Module 7 — Gestion des sinistres
-- Création dynamique de sinistres avec **scoring de fraude automatique**
-- Validé sur des profils de risque contrastés
-
-### Assistant IA
-- Modèle : **Groq llama-3.3-70b**
-- Validé sur plusieurs niveaux de rigueur, incluant des tests anti-hallucination
-
----
-
-## Modules bonus
-
-### Bonus A — Détecteur de biais
-- Audit du modèle de tarification via **décomposition SHAP**
-- Résultat : score d'équité élevé, facteurs de risque purs dominants (pas de proxy discriminatoire significatif)
-
-*(Modules bonus additionnels envisagés — Reserve Early Warning System et Excel-to-API Bridge — selon décision finale du périmètre)*
-
----
-
-## Stack technique
-
-| Couche | Technologies |
-|---|---|
-| **Backend** | FastAPI, PostgreSQL, SQLAlchemy, Alembic, JWT |
-| **Frontend** | Next.js, React, Tailwind CSS, Recharts |
-| **ML / IA** | LightGBM, XGBoost, SMOTE, YOLOv8n, SHAP, `chainladder`, Groq llama-3.3-70b, CamemBERT |
-| **Rapports** | LaTeX/Overleaf (rapport académique), WeasyPrint (rapports générés par la plateforme) |
-| **Environnement de dev** | Docker, Google Colab (validation des notebooks) |
-
----
-
-## Jeux de données
-
-- **freMTPL2** (freq/sev) — ≈ 678 000 polices d'assurance auto françaises
-- Données Kaggle sur les sinistres d'assurance
-- **CAS Loss Reserve Database** — via les échantillons intégrés de `chainladder` (ex. `cl.load_sample('clrd')`)
-- ≈ 8 800+ images annotées pour la détection de dommages véhicules
-
----
-
-## Métriques clés
-
-| Module | Métrique | Valeur |
-|---|---|---|
-| Détection de fraude | AUC | 0,82 |
-| Détection de fraude | Recall | 84 % |
-| Tarification (EDA) | Fréquence de sinistre | 10,07 % |
-| Tarification (EDA) | Coût moyen | 2 278,54 € |
-| IBNR (CL/Mack) | Réserve centrale | ≈ 494 113 |
-| IBNR (Bootstrap) | Écart vs CL/Mack | < 0,3 % |
-| IBNR (BF) | Écart vs CL/Mack | ≈ +20 % (a priori loss ratio 91,34 %) |
-| Dashboard | Contrôles actuariels validés | 10/10 |
-| Sentiment (CamemBERT) | Accuracy | 92 % (20 000 échantillons) |
-
----
+La documentation interactive de l'API est disponible sur `http://localhost:8000/docs`.
 
 ## Installation
 
-> Exemple générique — à adapter selon la configuration réelle du dépôt.
+Backend (Python 3.11) :
 
 ```bash
-# Cloner le dépôt
-git clone <url-du-repo>
-cd siap
-
-# Backend
-cd backend
+git clone https://github.com/selyassine/SIAP.git
+cd SIAP/siap-backend
 python -m venv venv
-source venv/bin/activate
+source venv/bin/activate              # Windows : venv\Scripts\activate
 pip install -r requirements.txt
-alembic upgrade head
-uvicorn main:app --reload
-
-# Frontend
-cd ../frontend
-npm install
-npm run dev
+cp .env.example .env                  # renseigner GROQ_API_KEY et SECRET_KEY
+uvicorn app.main:app --reload         # les tables sont créées au démarrage (SQLite par défaut)
+pytest                                # tests de l'API
 ```
 
-Variables d'environnement à configurer : connexion PostgreSQL, clé API Groq, secret JWT.
+Ou avec Docker : `docker compose up --build` depuis `siap-backend/`.
 
----
+Frontend :
+
+```bash
+cd ../siap-frontend
+npm install
+npm run dev                           # http://localhost:3000 ; API attendue sur http://127.0.0.1:8000
+```
+
+Le complément Excel se lance depuis `siap-excel-addin/` (voir `setup-https.md` pour le certificat local).
 
 ## Structure du dépôt
 
 ```
-siap/
-├── backend/
+SIAP/
+├── module1/ … module11/   # notebooks (EDA, GLM, ML, IBNR, vision, biais, alerte, stress, dérive) et artefacts exportés
+├── siap-backend/
 │   ├── app/
-│   │   ├── models/          # Modèles ML/actuariels exportés (.pkl, .json)
-│   │   ├── api/              # Endpoints REST par module
-│   │   ├── services/         # Logique métier (pricing, fraude, IBNR, CV...)
-│   │   └── db/                # SQLAlchemy + Alembic
+│   │   ├── api/v1/        # endpoints : auth, pricing, fraud, claims, audit d'équité, drift, monte-carlo…
+│   │   ├── routers/       # endpoints : reserving, monitoring, vision
+│   │   ├── services/      # logique métier
+│   │   ├── ml_models/     # modèles servis par l'API
+│   │   ├── models/ crud/ schemas/ db/
+│   │   └── main.py
+│   ├── tests/             # tests par module
 │   └── requirements.txt
-├── frontend/
-│   ├── app/                  # Pages Next.js
-│   ├── components/           # Composants React (dashboard, formulaires...)
-│   └── package.json
-├── notebooks/                # Notebooks de validation (Colab)
-│   ├── 01_pricing.ipynb
-│   ├── 02_fraud_detection.ipynb
-│   ├── 03_ibnr_reserving.ipynb
-│   ├── 04_computer_vision.ipynb
-│   └── 11_early_warning.ipynb
-├── report/                   # Rapport LaTeX du PFE (8 chapitres)
-└── README.md
+├── siap-frontend/         # Next.js : tableau de bord, tarification, fraude, sinistres, réserves, vision…
+└── siap-excel-addin/      # complément Office : =SIAP.PRIME, =SIAP.FRAUDE
 ```
 
----
+## Démarche
 
-## Démarche de développement
+- **Un module n'est terminé que lorsqu'il a été exécuté**, résultats à l'appui (métriques, captures), pas sur simple relecture du code.
+- **Les bugs n'apparaissaient qu'à l'exécution** et ont été corrigés : valeurs codées en dur dans l'interface au lieu des saisies, noms de colonnes incohérents entre entraînement et déploiement, NaN sur variance nulle.
+- **Données solides plutôt que fragiles** : échantillons intégrés de `chainladder` plutôt que des URL instables, date de souscription plutôt que date d'incident pour un étalement temporel correct.
 
-- **Validation par exécution** : chaque module n'est considéré terminé qu'après partage des résultats d'exécution réels (captures d'écran, tracebacks, métriques) — pas de validation par simple revue de code.
-- **Débogage itératif** : plusieurs bugs subtils détectés uniquement à l'exécution (valeurs par défaut codées en dur côté frontend au lieu des inputs utilisateur, incohérences de nommage de colonnes entre artefacts d'entraînement et métadonnées de déploiement, NaN sur variance nulle, objets ellipsis Python résiduels).
-- **Discipline sur les données** : recours à des alternatives validées quand les données live n'étaient pas disponibles (ex. `cl.load_sample('clrd')` plutôt que des URLs GitHub fragiles, `policy_bind_date` plutôt que `incident_date` pour garantir un étalement temporel correct).
+## Licence
 
----
-
-## Statut du projet
-
-✅ **Tous les modules cœurs sont terminés** (notebook, backend, frontend et tests validés) :
-Pricing, Fraude, IBNR, Vision par ordinateur, Dashboard, Génération de rapports, Gestion des sinistres, Assistant IA, Détecteur de biais.
-
-📝 **Phase actuelle** : rédaction du rapport écrit en LaTeX (plan en 8 chapitres — Introduction et Architecture déjà rédigés).
-
+Distribué sous licence MIT : voir [`LICENSE`](LICENSE).
 
 ---
 
-*Projet réalisé par Yassine Selmi— Cycle Ingénieur Actuariat & Data Science, ESPRIT (été 2026).*
+Réalisé par **Yassine Selmi** — [github.com/selyassine](https://github.com/selyassine)
