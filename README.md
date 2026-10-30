@@ -217,10 +217,6 @@ Pricing, Fraude, IBNR, Vision par ordinateur, Dashboard, Génération de rapport
 
 📝 **Phase actuelle** : rédaction du rapport écrit en LaTeX (plan en 8 chapitres — Introduction et Architecture déjà rédigés).
 
-🔜 **Reste à faire** :
-- Finaliser les chapitres restants du rapport
-- Décision sur le périmètre des modules bonus additionnels (Reserve Early Warning, Excel-to-API Bridge)
-- Test d'intégration bout-en-bout complet depuis un clone propre du dépôt
 
 ---
 
