@@ -10,6 +10,10 @@
 ![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)
 ![Licence MIT](https://img.shields.io/badge/licence-MIT-green)
 
+<p align="center">
+  <img src="docs/images/vision_dommages.jpg" alt="Détection des dommages par YOLOv8, sévérité et coût estimé" width="100%">
+</p>
+
 > Projet personnel. Les données sont publiques (freMTPL2, CAS Loss Reserve Database, jeux Kaggle) ; aucun résultat ne constitue un avis actuariel.
 
 ## En bref
@@ -28,6 +32,16 @@
 | Provisionnement IBNR | Chain Ladder / Mack, Bootstrap ODP, Bornhuetter-Ferguson | réserve centrale ≈ 494 113 ; Bootstrap à moins de 0,3 % ; BF ≈ +20 % (loss ratio a priori 91,34 %) |
 | Vision par ordinateur | YOLOv8n affiné sur plus de 8 800 images | détection des dommages et contrôle de cohérence avec le score de fraude |
 | Pilotage des risques | KPI par région, par année, réserves, fraude | 10/10 contrôles actuariels de cohérence |
+
+## Aperçu
+
+| Stress-tests Monte-Carlo des réserves (100 000 simulations) | Ce qui pèse dans le score de fraude (SHAP) |
+| :-: | :-: |
+| <img src="docs/images/monte_carlo_stress.png" alt="Stress-tests Monte-Carlo" width="100%"> | <img src="docs/images/fraude_shap.png" alt="SHAP fraude" width="100%"> |
+| **Audit d'équité du tarif : test contrefactuel par région** | **Analyse exploratoire de freMTPL2 (678 000 polices)** |
+| <img src="docs/images/audit_equite_regions.png" alt="Audit d'équité" width="100%"> | <img src="docs/images/eda_freMTPL2.png" alt="Analyse exploratoire" width="100%"> |
+
+<sub>Figures issues des notebooks du projet (<code>module2</code>, <code>module8</code>, <code>module10</code>, <code>module1</code>) ; en tête de page, le pipeline de vision (<code>module4</code>) sur des images du jeu de test.</sub>
 
 ## Architecture
 
