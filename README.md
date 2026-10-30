@@ -224,4 +224,4 @@ Pricing, Fraude, IBNR, Vision par ordinateur, Dashboard, Génération de rapport
 
 ---
 
-*Projet réalisé par Yassine dans le cadre du PFE — Cycle Ingénieur Actuariat & Data Science, ESPRIT (été 2026).*
+*Projet réalisé par Yassine— Cycle Ingénieur Actuariat & Data Science, ESPRIT (été 2026).*
