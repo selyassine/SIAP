@@ -14,6 +14,10 @@ import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
 
 from app.main import app  # noqa: E402
+from app.db.session import SessionLocal  # noqa: E402
+
+# Utilisé par certains tests pour préparer des données : même base que l'API.
+TestingSessionLocal = SessionLocal
 
 
 @pytest.fixture(scope="module")
