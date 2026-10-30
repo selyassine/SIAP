@@ -110,7 +110,13 @@ class MonteCarloService:
                 "capital_buffer_99_5_pct": r.get("risk_metrics", {}).get("capital_pct_99_5", 0),
             },
             "scenarios": scenarios,
-            "ldf_params": [], # Not strictly needed by the frontend widgets
+            # Calibration des facteurs de développement, un élément par décalage
+            "ldf_params": [
+                {"lag": int(lag), **params}
+                for lag, params in sorted(
+                    r.get("ldf_calibration", {}).items(), key=lambda kv: int(kv[0])
+                )
+            ],
             "histogram": histogram,
             "cdf_curve": r.get("cdf_curve", [])
         }
