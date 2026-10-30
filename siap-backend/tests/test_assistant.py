@@ -1,4 +1,9 @@
+import os
+
 import pytest
+
+# Ces tests appellent le vrai modèle (Groq) : ignorés sans clé d'API.
+sans_groq = pytest.mark.skipif(not os.getenv("GROQ_API_KEY"), reason="GROQ_API_KEY absente")
 
 @pytest.fixture
 def auth_headers(client):
@@ -18,6 +23,7 @@ def auth_headers(client):
     return {}
 
 
+@sans_groq
 def test_chat_monitoring_question(client, auth_headers):
     r = client.post(
         "/api/v1/assistant/chat",
@@ -30,6 +36,7 @@ def test_chat_monitoring_question(client, auth_headers):
     assert len(data["response"]) > 20
     assert "monitoring" in data["intents_detected"]
 
+@sans_groq
 def test_chat_fraud_question(client, auth_headers):
     r = client.post(
         "/api/v1/assistant/chat",
@@ -39,6 +46,7 @@ def test_chat_fraud_question(client, auth_headers):
     assert r.status_code == 200
     assert "fraud" in r.json()["intents_detected"]
 
+@sans_groq
 def test_chat_with_history(client, auth_headers):
     history = [
         {"role": "user", "content": "Quel est le loss ratio ?"},

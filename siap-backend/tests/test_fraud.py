@@ -1,12 +1,6 @@
-import pytest
-from fastapi.testclient import TestClient
-from app.main import app
-from app.api.v1.endpoints.auth import get_current_user
-
-# Mock authentication
-app.dependency_overrides[get_current_user] = lambda: {"sub": "testuser"}
-
-client = TestClient(app)
+# Authentification réelle via les fixtures de conftest.py. L'ancienne
+# substitution globale de get_current_user désactivait l'authentification
+# pour toute la session de tests, ce qui faussait les tests « sans jeton ».
 
 valid_claim = {
     "months_as_customer": 120,
@@ -45,35 +39,40 @@ valid_claim = {
     "auto_year": 2004
 }
 
-def test_fraud_detect():
-    response = client.post("/api/v1/fraud/detect", json=valid_claim)
+def test_fraud_detect(client, auth_headers):
+    response = client.post("/api/v1/fraud/detect", json=valid_claim, headers=auth_headers)
     assert response.status_code == 200
     data = response.json()
     assert "fraud_score" in data
     assert "risk_level" in data
     assert "alert" in data
 
-def test_fraud_detect_unknown_category():
+def test_fraud_detect_unknown_category(client, auth_headers):
     claim = dict(valid_claim)
     claim["incident_city"] = "Unknown City 123"
-    response = client.post("/api/v1/fraud/detect", json=claim)
+    response = client.post("/api/v1/fraud/detect", json=claim, headers=auth_headers)
     assert response.status_code == 200
     data = response.json()
     assert "fraud_score" in data
 
-def test_fraud_batch():
+def test_fraud_batch(client, auth_headers):
     batch_input = {
         "claims": [valid_claim, valid_claim]
     }
-    response = client.post("/api/v1/fraud/batch", json=batch_input)
+    response = client.post("/api/v1/fraud/batch", json=batch_input, headers=auth_headers)
     assert response.status_code == 200
     data = response.json()
     assert len(data["results"]) == 2
     assert data["summary"]["total_claims"] == 2
 
-def test_fraud_model_info():
-    response = client.get("/api/v1/fraud/model-info")
+def test_fraud_model_info(client, auth_headers):
+    response = client.get("/api/v1/fraud/model-info", headers=auth_headers)
     assert response.status_code == 200
     data = response.json()
     assert "performance" in data
     assert "optimal_threshold" in data
+
+
+def test_no_auth_rejected(client):
+    r = client.post("/api/v1/fraud/detect", json=valid_claim)
+    assert r.status_code == 401

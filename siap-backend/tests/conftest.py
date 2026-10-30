@@ -1,27 +1,39 @@
-import pytest
-from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from app.db.session import Base, get_db
-from app.main import app
+"""Configuration commune des tests.
 
-# Create a test sqlite db
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Les tests utilisent la même base que l'application : au démarrage, celle-ci y
+charge ses données (réserves, pilotage). Rediriger les tests vers une autre base
+la laissait vide, d'où des 404 sur les routes de pilotage.
+"""
+import os
+import uuid
 
-Base.metadata.create_all(bind=engine)
+os.environ.setdefault("DATABASE_URL", "sqlite:///./test.db")
+os.environ.setdefault("SECRET_KEY", "secret-de-test")
 
-def override_get_db():
-    try:
-        db = TestingSessionLocal()
-        yield db
-    finally:
-        db.close()
+import pytest  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
 
-app.dependency_overrides[get_db] = override_get_db
+from app.main import app  # noqa: E402
+
 
 @pytest.fixture(scope="module")
 def client():
     with TestClient(app) as c:
         yield c
+
+
+@pytest.fixture
+def auth_token(client):
+    """Crée un utilisateur unique et renvoie un jeton d'accès valide."""
+    email = f"pytest_{uuid.uuid4().hex[:10]}@siap.test"
+    r = client.post("/api/v1/auth/register",
+                    json={"email": email, "password": "test1234", "full_name": "Pytest"})
+    assert r.status_code == 200, r.text
+    r = client.post("/api/v1/auth/login", data={"username": email, "password": "test1234"})
+    assert r.status_code == 200, r.text
+    return r.json()["access_token"]
+
+
+@pytest.fixture
+def auth_headers(auth_token):
+    return {"Authorization": f"Bearer {auth_token}"}
