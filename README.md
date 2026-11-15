@@ -2,6 +2,8 @@
 
 **Plateforme d'analyse pour l'assurance non-vie (automobile) : tarification GLM + LightGBM, détection de fraude, provisionnement IBNR, expertise de dommages par vision par ordinateur, pilotage des risques, audit d'équité, rapports automatisés et assistant IA. Elle comprend une API FastAPI, une interface Next.js et un complément Excel.**
 
+> **In English.** SIAP is an analytics platform for non-life (motor) insurance: GLM and LightGBM pricing on freMTPL2 (about 678,000 policies), fraud detection (XGBoost with SMOTE, Isolation Forest; AUC ≈ 0.82), IBNR reserving (Chain Ladder, Mack, Bornhuetter-Ferguson, ODP bootstrap), vehicle damage assessment with YOLOv8, a SHAP fairness audit of the tariff and Monte Carlo stress tests. It ships a FastAPI backend, a Next.js interface and an Excel add-in. Personal project on public data; documentation is in French.
+
 [![Tests backend](https://github.com/selyassine/SIAP/actions/workflows/tests.yml/badge.svg)](https://github.com/selyassine/SIAP/actions/workflows/tests.yml)
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
