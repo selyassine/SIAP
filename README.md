@@ -38,6 +38,14 @@
 
 ## Aperçu
 
+L'application :
+
+| Tarification (Smart Pricing) | Provisionnement IBNR | Expertise des dommages par vision |
+| :-: | :-: | :-: |
+| <img src="docs/images/interface_tarification.png" alt="Page de tarification : prime recommandée pour un profil de conducteur" width="100%"> | <img src="docs/images/interface_ibnr.png" alt="Page de provisionnement IBNR : triangle cumulé et réserves" width="100%"> | <img src="docs/images/interface_vision.png" alt="Page de vision par ordinateur : dommages détectés et coût estimé" width="100%"> |
+
+Les analyses des notebooks :
+
 | Stress-tests Monte-Carlo des réserves (100 000 simulations) | Ce qui pèse dans le score de fraude (SHAP) |
 | :-: | :-: |
 | <img src="docs/images/monte_carlo_stress.png" alt="Stress-tests Monte-Carlo" width="100%"> | <img src="docs/images/fraude_shap.png" alt="SHAP fraude" width="100%"> |
